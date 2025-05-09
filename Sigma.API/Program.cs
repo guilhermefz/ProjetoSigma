@@ -1,5 +1,7 @@
 using AutoMapper;
+using Sigma.Domain.Interfaces.Repositories;
 using Sigma.Infra.CrossCutting.IoC;
+using Sigma.Infra.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,7 @@ MapperConfiguration mapperConfiguration = new MapperConfiguration(mapperConfig =
     mapperConfig.AddMaps(new[] { "Sigma.Application" });
 });
 builder.Services.AddSingleton(mapperConfiguration.CreateMapper());
+
 
 ContainerService.AddApplicationServicesCollentions(builder.Services);
 
