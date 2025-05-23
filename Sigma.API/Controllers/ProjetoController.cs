@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sigma.Application.Interfaces;
 using Sigma.Domain.Dtos;
+using Sigma.Infra.Data.Context;
+
 
 namespace Sigma.API.Controllers
 {
@@ -9,10 +11,12 @@ namespace Sigma.API.Controllers
     public class ProjetoController : ControllerBase
     {
         private readonly IProjetoService _projetoService;
+        private readonly SigmaContext _context;
 
-        public ProjetoController(IProjetoService projetoService)
+        public ProjetoController(IProjetoService projetoService, SigmaContext context)
         {
             _projetoService = projetoService;
+            _context = context; 
         }
 
         [HttpPost]
@@ -29,5 +33,22 @@ namespace Sigma.API.Controllers
             var resultado = await _projetoService.Listar();
             return Ok(resultado);
         }
+
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDto model)
+        {
+            // Consulta o usuário no banco de forma async
+            var usuario = await _context.Usuarios
+                .FirstOrDefaultAsync(u => u.Username == model.Username && u.Password == model.Password);
+
+            if (usuario == null)
+                return Unauthorized("Usuário ou senha inválidos");
+
+            var token = GerarToken(usuario.Username);
+
+            return Ok(new { token });
+        }
+
     }
 }
