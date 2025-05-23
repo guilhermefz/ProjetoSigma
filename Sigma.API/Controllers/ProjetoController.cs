@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sigma.Application.Interfaces;
 using Sigma.Domain.Dtos;
+using Sigma.Domain.Entities;
 using Sigma.Infra.Data.Context;
 
 
@@ -34,21 +35,8 @@ namespace Sigma.API.Controllers
             return Ok(resultado);
         }
 
-        [HttpPost]
-        [Route("login")]
-        public async Task<IActionResult> Login([FromBody] LoginDto model)
-        {
-            // Consulta o usuário no banco de forma async
-            var usuario = await _context.Usuarios
-                .FirstOrDefaultAsync(u => u.Username == model.Username && u.Password == model.Password);
-
-            if (usuario == null)
-                return Unauthorized("Usuário ou senha inválidos");
-
-            var token = GerarToken(usuario.Username);
-
-            return Ok(new { token });
-        }
+        
+       
 
     }
 }

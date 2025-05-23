@@ -8,5 +8,7 @@ namespace Sigma.Application.Dtos
 {
     class LoginDto
     {
+        public string Usurname { get; set; }
+        public string Password { get; set; }
     }
 }

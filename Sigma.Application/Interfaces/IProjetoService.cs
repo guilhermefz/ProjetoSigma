@@ -8,5 +8,7 @@ namespace Sigma.Application.Interfaces
         Task<bool> Inserir(ProjetoNovoDto model);
 
         Task<List<ProjetoDto>> Listar();
+
+        Task<string> LoginAsync(string username, string password);
     }
 }
