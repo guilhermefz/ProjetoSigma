@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Sigma.Application.Interfaces;
 using Sigma.Domain.Dtos;
 using Sigma.Domain.Entities;
@@ -7,6 +8,7 @@ using Sigma.Infra.Data.Context;
 
 namespace Sigma.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProjetoController : ControllerBase

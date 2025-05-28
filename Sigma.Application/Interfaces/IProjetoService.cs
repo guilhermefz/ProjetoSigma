@@ -10,5 +10,7 @@ namespace Sigma.Application.Interfaces
         Task<List<ProjetoDto>> Listar();
 
         Task<string> LoginAsync(string username, string password);
+
+        string GerarToken(string username);
     }
 }
