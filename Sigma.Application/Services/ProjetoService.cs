@@ -34,20 +34,36 @@ namespace Sigma.Application.Services
 
         public async Task<bool> Inserir(ProjetoNovoDto model)
         {
-            return await _projetoRepository.Inserir(_mapper.Map<Projeto>(model));
+            return await _projetoRepository.Salvar(_mapper.Map<Projeto>(model));
         }
 
 
         public async Task<List<ProjetoDto>> Listar()
         {
             var projetos = await _dbContext.Set<Projeto>().ToListAsync();
-
-            return projetos.Select(p => new ProjetoDto
-            {
-                Id = (int)p.Id,
-                Nome = p.Nome
-            }).ToList();
+            return _mapper.Map<List<ProjetoDto>>(projetos);
         }
+
+        public async Task Editar(ProjetoDto model)
+        {
+            var projetos = await _projetoRepository.ObterPorId(model.Id);
+            _mapper.Map(model, projetos);
+            await _projetoRepository.Salvar(projetos);
+        }
+
+        public async Task<List<ProjetoConsultaDto>> ConsultarAsync(string nome)
+        {
+            var projeto = await _projetoRepository.Consultar(nome);
+            return _mapper.Map<List<ProjetoConsultaDto>>(projeto);
+        }
+
+        public async Task DeletarPorId(long id)
+        {
+            await _projetoRepository.DeletarAsync(id);
+        }
+
+
+
 
         public async Task<string> LoginAsync(string username, string password)
         {

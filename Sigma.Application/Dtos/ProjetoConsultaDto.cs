@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace Sigma.Application.Dtos
 {
-    public class ProjetoDto
+    public class ProjetoConsultaDto
     {
         public long Id { get; set; }
         public string? Nome { get; set; }
         public string Descricao { get; set; }
+        public DateTime DataInicio { get; set; }
         public DateTime PrevisaoTermino { get; set; }
         public decimal Orcamento { get; set; }
         public ClassificacaoRisco Classificacao { get; set; }

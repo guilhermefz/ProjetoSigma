@@ -14,9 +14,18 @@ namespace Sigma.Infra.Data.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<bool> Inserir(Projeto entidade)
+        public async Task<bool> Salvar(Projeto entidade)
         {
-           await _dbContext.Set<Projeto>().AddAsync(entidade);
+            if (entidade.DataInicio == default)
+            {
+                entidade.DataInicio = DateTime.UtcNow;
+            }
+            if (entidade.Id != 0)
+                 _dbContext.Projetos.Update(entidade);
+            else
+            {
+                await _dbContext.Set<Projeto>().AddAsync(entidade);
+            }
            await _dbContext.SaveChangesAsync();
            return true;
         }
@@ -25,7 +34,21 @@ namespace Sigma.Infra.Data.Repositories
         {
             return await _dbContext.Set<Projeto>().ToListAsync();
         }
+        public async Task<Projeto> ObterPorId(long Id)
+        {
+            return await _dbContext.Projetos.FirstOrDefaultAsync(c => c.Id == Id);
 
+        }
+        
+        public async Task<List<Projeto>> Consultar(string nome)
+        {
+            return await _dbContext.Projetos.Where(c => c.Nome.Contains(nome)).ToListAsync();
+        }
+
+        public async Task DeletarAsync(long id)
+        {
+            await _dbContext.Projetos.Where(c => c.Id == id).ExecuteDeleteAsync();
+        }
 
     }
 }

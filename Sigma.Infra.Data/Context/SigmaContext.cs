@@ -12,6 +12,7 @@ namespace Sigma.Infra.Data.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+           
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
             {
                 entity.SetTableName((entity.GetTableName() ?? string.Empty).ToLower());

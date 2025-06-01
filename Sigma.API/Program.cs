@@ -2,12 +2,18 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Sigma.Application.Interfaces;
+using Sigma.Application.Services;
 using Sigma.Domain.Interfaces.Repositories;
 using Sigma.Infra.CrossCutting.IoC;
+using Sigma.Infra.Data.Context;
 using Sigma.Infra.Data.Repositories;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<IProjetoRepository, ProjetoRepository>();
+builder.Services.AddScoped<IProjetoService, ProjetoService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
