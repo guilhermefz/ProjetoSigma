@@ -10,7 +10,7 @@ using Sigma.Infra.Data.Migrations;
 
 namespace Sigma.API.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProjetoController : ControllerBase

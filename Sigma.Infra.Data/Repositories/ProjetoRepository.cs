@@ -5,7 +5,7 @@ using Sigma.Infra.Data.Context;
 
 namespace Sigma.Infra.Data.Repositories
 {
-    public class ProjetoRepository : IProjetoRepository
+    public class ProjetoRepository : IProjetoRepository 
     {
         private readonly SigmaContext _dbContext;
 
@@ -34,7 +34,7 @@ namespace Sigma.Infra.Data.Repositories
         {
             return await _dbContext.Set<Projeto>().ToListAsync();
         }
-        public async Task<Projeto> ObterPorId(long Id)
+        public async Task<Projeto> ObterPorIdAsync(long Id)
         {
             return await _dbContext.Projetos.FirstOrDefaultAsync(c => c.Id == Id);
 

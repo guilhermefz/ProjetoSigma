@@ -11,6 +11,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using Sigma.Domain.Enums;
 
 
 namespace Sigma.Application.Services
@@ -46,7 +47,7 @@ namespace Sigma.Application.Services
 
         public async Task Editar(ProjetoDto model)
         {
-            var projetos = await _projetoRepository.ObterPorId(model.Id);
+            var projetos = await _projetoRepository.ObterPorIdAsync(model.Id);
             _mapper.Map(model, projetos);
             await _projetoRepository.Salvar(projetos);
         }
@@ -59,6 +60,17 @@ namespace Sigma.Application.Services
 
         public async Task DeletarPorId(long id)
         {
+            var projeto = await _projetoRepository.ObterPorIdAsync(id);
+
+            if (projeto == null)
+                throw new Exception("Projeto não encontrado.");
+
+            if (projeto.Status == StatusProjeto.EmAndamento || projeto.Status == StatusProjeto.Planejado || projeto.Status == StatusProjeto.Encerrado || 
+                projeto.Status == StatusProjeto.Iniciado)
+            {
+                throw new Exception("Não é permitido excluir projetos com esse status.");
+            }
+                
             await _projetoRepository.DeletarAsync(id);
         }
 

@@ -10,16 +10,9 @@ namespace Sigma.Domain.Interfaces.Repositories
     public interface IProjetoRepository
     {
         Task<bool> Salvar(Projeto entidade);
-
-
         Task<IEnumerable<Projeto>> ListarTodosAsync();
-        Task<Projeto> ObterPorId(long Id);
-
         Task<List<Projeto>> Consultar(string nome);
         Task DeletarAsync(long id);
-
-
+        Task<Projeto> ObterPorIdAsync(long Id);
     }
-
-
 }
